@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Event Validator using pydantic
+
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  EventValidatorFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: code/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Events:
+        EventValidator_post:
+          Type: Api 
+          Properties:
+            Path: /event_validator
+            Method: post
+        EventValidator_get:
+          Type: Api 
+          Properties:
+            Path: /event_validator
+            Method: get
+            
+
+Outputs:
+  EventValidatorApi:
+    Description: "API Gateway endpoint URL for Prod stage for Event Validator"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/event_validator/"
+  EventValidatorFunction:
+    Description: "Event Validator Lambda Function ARN"
+    Value: !GetAtt EventValidatorFunction.Arn
+  EventValidatorFunctionIamRole:
+    Description: "IAM Role created for Event Validator"
+    Value: !GetAtt EventValidatorFunctionRole.Arn

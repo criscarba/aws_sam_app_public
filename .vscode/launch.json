@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "lambda-python3.7:HelloWorldFunction (python3.7)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "lambda-python3.7/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "API lambda-python3.7:HelloWorldFunction (python3.7)",
+            "invokeTarget": {
+                "target": "api",
+                "templatePath": "lambda-python3.7/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "api": {
+                "path": "/hello",
+                "httpMethod": "get",
+                "payload": {
+                    "json": {}
+                }
+            },
+            "lambda": {
+                "runtime": "python3.7"
+            }
+        }
+    ]
+}
